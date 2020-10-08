@@ -22,7 +22,7 @@ def run():
     for filename in os.listdir(currentFolder):
         if filename.endswith('.ini'):
             bezelName = filename.lstrip(currentFolder).rstrip('.ini')
-            bezelxml = addView(mamelayout, currentFolder, bezelName)
+            addView(mamelayout, currentFolder, bezelName)
 
             # item1.text = 'item1abc'
             # item2.text = 'item2abc'
@@ -30,8 +30,8 @@ def run():
             # myfile = open("items2.xml", "w")
             # myfile.write(mydata)
 
-            xmlstr = minidom.parseString(eT.tostring(bezelxml)).toprettyxml(indent="   ")
-            print(xmlstr)
+    xmlstr = minidom.parseString(eT.tostring(mamelayout)).toprettyxml(indent="   ")
+    print(xmlstr)
 
 
 class Ini:
@@ -58,15 +58,10 @@ def addBgToXml(bezelxml):
 
 
 def addView(mamelayout, currentFolder, bezelName):
-    global bgImg
-    bezelName.find('')
-
     ini = readIni(bezelName)
     bzImg = cv2.imread(currentFolder + bezelName + '.png')
-    bezelxml = createXml(ini, bzImg)
+    bezelxml = createXml(mamelayout, ini, bzImg)
     addBgToXml(bezelxml)
-    return bezelxml
-
 
 def createXml(mamelayout, ini, bzImg):
     elementElem = eT.SubElement(mamelayout, 'element')
